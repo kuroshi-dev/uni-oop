@@ -31,7 +31,7 @@ QLabel {
     font-weight: bold;
 }
 
-QLineEdit, QSpinBox, QDoubleSpinBox {
+QLineEdit {
     background-color: #2A2A3A;
     color: #E0E0E0;
     border: 1px solid #3A3A4A;
@@ -39,7 +39,20 @@ QLineEdit, QSpinBox, QDoubleSpinBox {
     padding: 6px 10px;
     selection-background-color: #5A5A6A;
 }
-QLineEdit:focus, QSpinBox:focus, QDoubleSpinBox:focus {
+QLineEdit:focus {
+    border: 1px solid #6A6A7A;
+    background-color: #323242;
+}
+
+QSpinBox, QDoubleSpinBox {
+    background-color: #2A2A3A;
+    color: #E0E0E0;
+    border: 1px solid #3A3A4A;
+    border-radius: 6px;
+    padding: 6px 10px;
+    selection-background-color: #5A5A6A;
+}
+QSpinBox:focus, QDoubleSpinBox:focus {
     border: 1px solid #6A6A7A;
     background-color: #323242;
 }
@@ -72,6 +85,9 @@ QTableWidget {
     selection-color: #FFFFFF;
     border-radius: 6px;
 }
+QTableWidget::item {
+    background-color: #1E1E2E;
+}
 
 QHeaderView::section {
     background-color: #2A2A3A;
@@ -83,6 +99,19 @@ QHeaderView::section {
 }
 QHeaderView::section:hover {
     background-color: #323242;
+}
+
+QHeaderView {
+    background-color: #1E1E2E;
+}
+
+QTableWidget QTableCornerButton::section {
+    background-color: #2A2A3A;
+    border: 1px solid #3A3A4A;
+}
+
+QTableWidget::item {
+    color: #E0E0E0;
 }
 
 QScrollBar:vertical {
@@ -119,18 +148,52 @@ QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
     width: 0px;
 }
 
-QSpinBox::up-button, QDoubleSpinBox::up-button,
+QSpinBox, QDoubleSpinBox {
+    background-color: #2A2A3A;
+    color: #E0E0E0;
+    border: 1px solid #3A3A4A;
+    border-radius: 6px;
+    padding: 6px 10px;
+    selection-background-color: #5A5A6A;
+}
+QSpinBox:focus, QDoubleSpinBox:focus {
+    border: 1px solid #6A6A7A;
+    background-color: #323242;
+}
+QSpinBox::up-button, QDoubleSpinBox::up-button {
+    background-color: #3A3A4A;
+    border: 1px solid #4A4A5A;
+    border-radius: 3px;
+    width: 18px;
+    margin: 2px;
+}
+QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover {
+    background-color: #4A4A5A;
+}
 QSpinBox::down-button, QDoubleSpinBox::down-button {
     background-color: #3A3A4A;
-    border: none;
+    border: 1px solid #4A4A5A;
+    border-radius: 3px;
+    width: 18px;
+    margin: 2px;
 }
-QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover,
 QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {
     background-color: #4A4A5A;
-}</string>
+}
+</string>
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="tableLabel">
+      <property name="text">
+       <string>&lt;h3&gt;Список товарів на складі&lt;/h3&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="tableWidget"/>
+    </item>
     <item>
      <widget class="QLabel" name="addLabel">
       <property name="text">
@@ -220,6 +283,19 @@ QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {
        </widget>
       </item>
       <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
        <widget class="QPushButton" name="searchButton">
         <property name="text">
          <string>Пошук</string>
@@ -233,30 +309,7 @@ QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {
         </property>
        </widget>
       </item>
-      <item>
-       <spacer name="horizontalSpacer">
-        <property name="orientation">
-         <enum>Qt::Orientation::Horizontal</enum>
-        </property>
-        <property name="sizeHint" stdset="0">
-         <size>
-          <width>40</width>
-          <height>20</height>
-         </size>
-        </property>
-       </spacer>
-      </item>
      </layout>
-    </item>
-    <item>
-     <widget class="QLabel" name="tableLabel">
-      <property name="text">
-       <string>&lt;h3&gt;Список товарів на складі&lt;/h3&gt;</string>
-      </property>
-     </widget>
-    </item>
-    <item>
-     <widget class="QTableWidget" name="tableWidget"/>
     </item>
    </layout>
   </widget>

@@ -5,6 +5,10 @@
 #include <vector>
 #include "Product.h"
 #include "Inventory.h"
+#include <QMessageBox>
+#include <QPushButton>
+#include <QHBoxLayout>
+#include <QWidget>
 
 namespace Ui {
 class InventoryWindow;

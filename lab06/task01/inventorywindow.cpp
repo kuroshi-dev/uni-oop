@@ -1,23 +1,17 @@
 #include "InventoryWindow.h"
 #include "ui_InventoryWindow.h"
-#include <QMessageBox>
-#include <QPushButton>
 
 InventoryWindow::InventoryWindow(QWidget *parent)
-    : QMainWindow(parent)
-    , ui(new Ui::InventoryWindow)
+    : QMainWindow(parent), ui(new Ui::InventoryWindow)
 {
     ui->setupUi(this);
 
     ui->tableWidget->setColumnCount(4);
     ui->tableWidget->setHorizontalHeaderLabels({"Назва", "Ціна (грн)", "Кількість", "Дії"});
-    ui->tableWidget->horizontalHeader()->setStretchLastSection(true);
+    ui->tableWidget->horizontalHeader()->setStretchLastSection(false);
+    ui->tableWidget->horizontalHeader()->setSectionResizeMode(3, QHeaderView::Stretch);
     ui->tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
     ui->tableWidget->setEditTriggers(QAbstractItemView::NoEditTriggers);
-
-    connect(ui->addButton, &QPushButton::clicked, this, &InventoryWindow::on_addButton_clicked);
-    connect(ui->searchButton, &QPushButton::clicked, this, &InventoryWindow::on_searchButton_clicked);
-    connect(ui->showAllButton, &QPushButton::clicked, this, &InventoryWindow::on_showAllButton_clicked);
 
     addSampleProducts();
 }
@@ -33,7 +27,8 @@ void InventoryWindow::on_addButton_clicked()
     double price = ui->priceSpinBox->value();
     int quantity = ui->quantitySpinBox->value();
 
-    if (name.isEmpty()) {
+    if (name.isEmpty())
+    {
         QMessageBox::warning(this, "Помилка", "Введіть назву товару!");
         return;
     }
@@ -59,7 +54,8 @@ void InventoryWindow::on_searchButton_clicked()
     double price = ui->searchPriceSpinBox->value();
     auto found = inventory.findByPrice(price);
 
-    if (found.empty()) {
+    if (found.empty())
+    {
         QMessageBox::information(this, "Результат пошуку",
                                  "Товарів з такою ціною не знайдено!");
     }
@@ -67,29 +63,34 @@ void InventoryWindow::on_searchButton_clicked()
     displayProducts(found);
 }
 
-void InventoryWindow::removeProduct(const std::string& name)
+void InventoryWindow::removeProduct(const std::string &name)
 {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Підтвердження",
                                   QString("Видалити товар '%1'?").arg(QString::fromStdString(name)),
                                   QMessageBox::Yes | QMessageBox::No);
 
-    if (reply == QMessageBox::Yes) {
-        if (inventory.removeItem(name)) {
+    if (reply == QMessageBox::Yes)
+    {
+        if (inventory.removeItem(name))
+        {
             on_showAllButton_clicked();
             QMessageBox::information(this, "Успіх", "Товар видалено!");
-        } else {
+        }
+        else
+        {
             QMessageBox::warning(this, "Помилка", "Не вдалося видалити товар!");
         }
     }
 }
 
-void InventoryWindow::displayProducts(const std::vector<Product>& products)
+void InventoryWindow::displayProducts(const std::vector<Product> &products)
 {
     ui->tableWidget->setRowCount(0);
 
-    for (size_t i = 0; i < products.size(); ++i) {
-        const Product& product = products[i];
+    for (size_t i = 0; i < products.size(); ++i)
+    {
+        const Product &product = products[i];
 
         int row = ui->tableWidget->rowCount();
         ui->tableWidget->insertRow(row);
@@ -101,14 +102,27 @@ void InventoryWindow::displayProducts(const std::vector<Product>& products)
         ui->tableWidget->setItem(row, 2,
                                  new QTableWidgetItem(QString::number(product.getQuantity())));
 
-        QPushButton* deleteButton = new QPushButton("Видалити");
+        QPushButton *deleteButton = new QPushButton("Видалити");
+        deleteButton->setMaximumWidth(100);
         std::string name = product.getName();
         connect(deleteButton, &QPushButton::clicked,
-                [this, name]() { removeProduct(name); });
-        ui->tableWidget->setCellWidget(row, 3, deleteButton);
+                [this, name]()
+                { removeProduct(name); });
+
+        QWidget *widget = new QWidget();
+        QHBoxLayout *layout = new QHBoxLayout(widget);
+        layout->addWidget(deleteButton);
+        layout->setAlignment(Qt::AlignRight);
+        layout->setContentsMargins(5, 2, 5, 2);
+
+        ui->tableWidget->setCellWidget(row, 3, widget);
+        ui->tableWidget->setRowHeight(row, 40);
     }
 
-    ui->tableWidget->resizeColumnsToContents();
+    for (int i = 0; i < 3; ++i)
+    {
+        ui->tableWidget->resizeColumnToContents(i);
+    }
 }
 
 void InventoryWindow::addSampleProducts()
