@@ -14,17 +14,17 @@ protected:
 
 public:
     Person(string n = "");
-    Person(const Person &other); // copy constructor
-    string getName() const;
-    virtual void displayInfo() const = 0;
+    Person(Person &other);
+    string getName();
+    virtual void displayInfo() = 0;
     virtual ~Person() {}
 
-    Person &operator=(const Person &other);
-    bool operator==(const Person &other) const;
-    bool operator!=(const Person &other) const;
-    bool operator<(const Person &other) const;
-    bool operator>(const Person &other) const;
-    friend ostream &operator<<(ostream &out, const Person &person);
+    Person &operator=(Person &other);
+    bool operator==(Person &other);
+    bool operator!=(Person &other);
+    bool operator<(Person &other);
+    bool operator>(Person &other);
+    friend ostream &operator<<(ostream &out, Person &person);
 };
 
 #endif // PERSON_H

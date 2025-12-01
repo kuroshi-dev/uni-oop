@@ -70,7 +70,7 @@ private:
     void createPixmaps();
     bool checkCollisionWithTrap();
     bool checkCollisionWithWindow();
-    double distance(const QPointF &p1, const QPointF &p2);
+    double distance(QPointF &p1, QPointF &p2);
     void nextLevel();
     void gameOver();
     void flyEscaped();

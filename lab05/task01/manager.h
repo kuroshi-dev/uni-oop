@@ -10,16 +10,16 @@ protected:
 
 public:
     Manager(string n = "", string p = "");
-    Manager(const Manager &other);
+    Manager(Manager &other);
 
-    string getPhone() const;
-    void displayInfo() const override;
+    string getPhone();
+    void displayInfo() override;
 
-    Manager &operator=(const Manager &other);
-    bool operator==(const Manager &other) const;
-    bool operator!=(const Manager &other) const;
+    Manager &operator=(Manager &other);
+    bool operator==(Manager &other);
+    bool operator!=(Manager &other);
 
-    friend ostream &operator<<(ostream &out, const Manager &manager);
+    friend ostream &operator<<(ostream &out, Manager &manager);
 };
 
 #endif // MANAGER_H

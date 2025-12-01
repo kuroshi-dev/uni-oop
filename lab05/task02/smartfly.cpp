@@ -1,14 +1,11 @@
 #include "smartfly.h"
 
-SmartFly::SmartFly(QWidget *parent) : Fly(parent, 2.0, 45), seekingWindow(false)
-{
+SmartFly::SmartFly(QWidget *parent) : Fly(parent, 2.0, 45), seekingWindow(false){
     createPixmap();
 }
 
-void SmartFly::update(const QPointF &cursorPos, const QPointF &windowPos)
-{
-    if (!windowPos.isNull())
-    {
+void SmartFly::update(QPointF &cursorPos, QPointF &windowPos){
+    if (!windowPos.isNull()){
         targetWindow = windowPos;
         seekingWindow = true;
     }
@@ -16,16 +13,13 @@ void SmartFly::update(const QPointF &cursorPos, const QPointF &windowPos)
     QPointF direction = position - cursorPos;
     double distToCursor = std::sqrt(direction.x() * direction.x() + direction.y() * direction.y());
 
-    if (distToCursor < 100.0)
-    {
+    if (distToCursor < 100.0){
         moveAwayFromCursor(cursorPos);
     }
-    else if (seekingWindow)
-    {
+    else if (seekingWindow){
         moveTowardsWindow();
     }
-    else
-    {
+    else{
         moveRandomly();
     }
 
@@ -35,13 +29,11 @@ void SmartFly::update(const QPointF &cursorPos, const QPointF &windowPos)
     setPosition(position);
 }
 
-void SmartFly::moveTowardsWindow()
-{
+void SmartFly::moveTowardsWindow(){
     QPointF direction = targetWindow - position;
     double dist = std::sqrt(direction.x() * direction.x() + direction.y() * direction.y());
 
-    if (dist > 10.0)
-    {
+    if (dist > 10.0){
         direction /= dist;
         velocity += direction * speed * 0.1;
     }

@@ -5,8 +5,7 @@ using namespace std;
 
 void demonstrateOperators();
 
-void demonstrateOperators()
-{
+void demonstrateOperators(){
     cout << "\n=== DEMONSTRATION OF OVERLOADED OPERATORS ===" << endl;
 
     cout << "\n--- Operators for Instrument ---" << endl;
@@ -86,8 +85,7 @@ void demonstrateOperators()
     delete l1;
 }
 
-int main()
-{
+int main(){
     SetConsoleOutputCP(CP_UTF8);
     SetConsoleCP(CP_UTF8);
 
@@ -98,14 +96,12 @@ int main()
     int currentBand = -1;
 
     int choice;
-    do
-    {
+    do{
         cout << "\n----------- MAIN MENU -----------" << endl;
         cout << "1. Create New Band" << endl;
         cout << "2. Select Band" << endl;
         cout << "3. Show All Bands" << endl;
-        if (currentBand >= 0 && currentBand < bands.size())
-        {
+        if (currentBand >= 0 && currentBand < bands.size()){
             cout << "\n--- BAND MANAGEMENT (Current: " << bands[currentBand]->getName() << ") ---" << endl;
             cout << "4. Add Musician" << endl;
             cout << "5. Add Leader" << endl;
@@ -116,16 +112,14 @@ int main()
         cout << "0. Exit" << endl;
         cout << "----------------------------------" << endl;
         cout << "Your choice: ";
-        while (!(cin >> choice))
-        {
+        while (!(cin >> choice)){
             cin.clear();
             cin.ignore(numeric_limits<streamsize>::max(), '\n');
             cout << "Invalid input. Please enter a number: ";
         }
         cin.ignore(numeric_limits<streamsize>::max(), '\n');
 
-        if (choice == 1)
-        {
+        if (choice == 1){
             string bandName, bandStyle;
             cout << "Enter Band Name: ";
             getline(cin, bandName);
@@ -136,10 +130,8 @@ int main()
             if (currentBand == -1)
                 currentBand = 0;
         }
-        else if (choice == 2)
-        {
-            if (bands.empty())
-            {
+        else if (choice == 2){
+            if (bands.empty()){
                 cout << "No bands available. Create a band first." << endl;
                 continue;
             }

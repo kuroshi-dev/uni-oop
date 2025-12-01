@@ -12,19 +12,19 @@ protected:
 
 public:
     Musician(string n = "", string p = "", string instrName = "", int instrYear = 0);
-    Musician(const Musician &other);
+    Musician(Musician &other);
 
-    void displayInfo() const override;
-    string getInstrumentName() const;
-    const Instrument &getInstrument() const;
+    void displayInfo() override;
+    string getInstrumentName();
+    Instrument &getInstrument();
 
-    Musician &operator=(const Musician &other);
-    bool operator==(const Musician &other) const;
-    bool operator!=(const Musician &other) const;
-    bool operator<(const Musician &other) const;
-    bool operator>(const Musician &other) const;
+    Musician &operator=(Musician &other);
+    bool operator==(Musician &other);
+    bool operator!=(Musician &other);
+    bool operator<(Musician &other);
+    bool operator>(Musician &other);
 
-    friend ostream &operator<<(ostream &out, const Musician &musician);
+    friend ostream &operator<<(ostream &out, Musician &musician);
 };
 
 #endif // MUSICIAN_H

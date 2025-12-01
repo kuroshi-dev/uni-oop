@@ -2,8 +2,7 @@
 #include "ui_mainwindow.h"
 
 MainWindow::MainWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::MainWindow), trapSize(100), windowSize(80), gameRunning(false), score(0), level(1), fliesCaught(0)
-{
+    : QMainWindow(parent), ui(new Ui::MainWindow), trapSize(100), windowSize(80), gameRunning(false), score(0), level(1), fliesCaught(0){
     ui->setupUi(this);
 
     setFixedSize(800, 600);
@@ -44,22 +43,18 @@ MainWindow::MainWindow(QWidget *parent)
     startGame();
 }
 
-MainWindow::~MainWindow()
-{
+MainWindow::~MainWindow(){
     delete ui;
 }
 
-void MainWindow::createPixmaps()
-{
+void MainWindow::createPixmaps(){
     QPixmap trapPixmap(":/images/flytrap.png");
-    if (!trapPixmap.isNull())
-    {
+    if (!trapPixmap.isNull()){
         trapLabel->setPixmap(trapPixmap.scaled(trapSize, trapSize, Qt::KeepAspectRatio, Qt::SmoothTransformation));
     }
 
     QPixmap windowPixmap(":/images/window.png");
-    if (windowPixmap.isNull())
-    {
+    if (windowPixmap.isNull()){
         windowPixmap = QPixmap(windowSize, windowSize);
         windowPixmap.fill(Qt::lightGray);
     }
@@ -71,8 +66,7 @@ void MainWindow::createPixmaps()
     QPixmap smartflyPixmap(":/images/smartfly.png");
 }
 
-void MainWindow::initializeGame()
-{
+void MainWindow::initializeGame(){
     level = 1;
     score = 0;
     fliesCaught = 0;
@@ -80,12 +74,10 @@ void MainWindow::initializeGame()
     initializeLevel();
 }
 
-void MainWindow::initializeLevel()
-{
+void MainWindow::initializeLevel(){
     flies.clear();
 
-    switch (level)
-    {
+    switch (level){
     case 1:
         flies.push_back(std::make_unique<Fly>(this, 1.5, 40));
         instructionLabel->setText("Рівень 1: Наведіть курсор на муху, щоб загнати її в пастку!");
@@ -150,40 +142,33 @@ void MainWindow::initializeLevel()
     levelLabel->setText(QString("Рівень: %1").arg(level));
 }
 
-bool MainWindow::event(QEvent *e)
-{
-    if (e->type() == QEvent::MouseMove && gameRunning)
-    {
+bool MainWindow::event(QEvent *e){
+    if (e->type() == QEvent::MouseMove && gameRunning){
         QMouseEvent *mouseEvent = static_cast<QMouseEvent *>(e);
-        for (auto &fly : flies)
-        {
+        for (auto &fly : flies){
             fly->update(mouseEvent->pos(), windowPos);
         }
     }
     return QMainWindow::event(e);
 }
 
-void MainWindow::updateGame()
-{
+void MainWindow::updateGame(){
     if (!gameRunning)
         return;
 
     QPointF cursorPos = mapFromGlobal(QCursor::pos());
 
     // Update all flies
-    for (auto &fly : flies)
-    {
+    for (auto &fly : flies){
         fly->update(cursorPos, windowPos);
         fly->checkBounds(width(), height());
     }
 
-    if (checkCollisionWithTrap())
-    {
+    if (checkCollisionWithTrap()){
         return;
     }
 
-    if (level >= 2 && checkCollisionWithWindow())
-    {
+    if (level >= 2 && checkCollisionWithWindow()){
         flyEscaped();
         return;
     }
@@ -192,18 +177,14 @@ void MainWindow::updateGame()
     scoreLabel->setText(QString("Очки: %1").arg(score));
 }
 
-bool MainWindow::checkCollisionWithTrap()
-{
-    for (auto it = flies.begin(); it != flies.end(); ++it)
-    {
+bool MainWindow::checkCollisionWithTrap(){
+    for (auto it = flies.begin(); it != flies.end(); ++it){
         double dist = distance((*it)->getPosition(), trapPos);
-        if (dist < ((*it)->getSize() / 2.0 + trapSize / 3.0))
-        {
+        if (dist < ((*it)->getSize() / 2.0 + trapSize / 3.0)){
             flies.erase(it);
             fliesCaught++;
 
-            if (flies.empty())
-            {
+            if (flies.empty()){
                 nextLevel();
             }
             return true;
@@ -212,31 +193,26 @@ bool MainWindow::checkCollisionWithTrap()
     return false;
 }
 
-bool MainWindow::checkCollisionWithWindow()
-{
+bool MainWindow::checkCollisionWithWindow(){
     if (level < 2)
         return false;
 
-    for (auto it = flies.begin(); it != flies.end(); ++it)
-    {
+    for (auto it = flies.begin(); it != flies.end(); ++it){
         double dist = distance((*it)->getPosition(), windowPos);
-        if (dist < ((*it)->getSize() / 2.0 + windowSize / 2.0))
-        {
+        if (dist < ((*it)->getSize() / 2.0 + windowSize / 2.0)){
             return true;
         }
     }
     return false;
 }
 
-double MainWindow::distance(const QPointF &p1, const QPointF &p2)
-{
+double MainWindow::distance(QPointF &p1, QPointF &p2){
     double dx = p1.x() - p2.x();
     double dy = p1.y() - p2.y();
     return std::sqrt(dx * dx + dy * dy);
 }
 
-void MainWindow::nextLevel()
-{
+void MainWindow::nextLevel(){
     level++;
 
     QMessageBox msgBox;
@@ -250,13 +226,11 @@ void MainWindow::nextLevel()
     initializeLevel();
 }
 
-void MainWindow::flyEscaped()
-{
+void MainWindow::flyEscaped(){
     gameOver();
 }
 
-void MainWindow::gameOver()
-{
+void MainWindow::gameOver(){
     gameRunning = false;
     gameTimer->stop();
 
@@ -264,14 +238,12 @@ void MainWindow::gameOver()
     msgBox.setWindowTitle("Гра закінчена!");
 
     QString message;
-    if (level >= 2)
-    {
+    if (level >= 2){
         message = QString("Муха втекла через вікно!\n\nВи дісталися до рівня: %1\nВаш рахунок: %2 points\n\nБажаєте зіграти ще раз?")
                       .arg(level)
                       .arg(score);
     }
-    else
-    {
+    else{
         message = QString("Муха попалась у пастку!\n\nВаш рахунок: %1 points\n\nБажаєте зіграти ще раз?").arg(score);
     }
 
@@ -281,66 +253,54 @@ void MainWindow::gameOver()
 
     int result = msgBox.exec();
 
-    if (result == QMessageBox::Yes)
-    {
+    if (result == QMessageBox::Yes){
         initializeGame();
         startGame();
     }
-    else
-    {
+    else{
         close();
     }
 }
 
-void MainWindow::startGame()
-{
+void MainWindow::startGame(){
     gameTimer->start(16); // ~60 FPS
 }
 
-QPointF MainWindow::getSafeSpawnPosition(int flySize)
-{
-    const int maxAttempts = 50;
-    const double minDistanceFromTrap = trapSize + flySize + 50;
-    const double minDistanceFromWindow = windowSize + flySize + 50;
+QPointF MainWindow::getSafeSpawnPosition(int flySize){
+    int maxAttempts = 50;
+    double minDistanceFromTrap = trapSize + flySize + 50;
+    double minDistanceFromWindow = windowSize + flySize + 50;
 
-    for (int attempt = 0; attempt < maxAttempts; attempt++)
-    {
+    for (int attempt = 0; attempt < maxAttempts; attempt++){
         QPointF pos(
             QRandomGenerator::global()->bounded(flySize + 50, width() - flySize - 50),
             QRandomGenerator::global()->bounded(flySize + 100, height() - flySize - 100));
 
         double distToTrap = distance(pos, trapPos);
-        if (distToTrap < minDistanceFromTrap)
-        {
+        if (distToTrap < minDistanceFromTrap){
             continue;
         }
 
-        if (level >= 2)
-        {
+        if (level >= 2){
             double distToWindow = distance(pos, windowPos);
-            if (distToWindow < minDistanceFromWindow)
-            {
+            if (distToWindow < minDistanceFromWindow){
                 continue;
             }
         }
 
         // Check collision with other flies
         bool tooCloseToOtherFly = false;
-        for (const auto &otherFly : flies)
-        {
-            if (otherFly->getPosition() != QPointF(0, 0))
-            {
+        for (auto &otherFly : flies){
+            if (otherFly->getPosition() != QPointF(0, 0)){
                 double distToOtherFly = distance(pos, otherFly->getPosition());
-                if (distToOtherFly < flySize + otherFly->getSize() + 30)
-                {
+                if (distToOtherFly < flySize + otherFly->getSize() + 30){
                     tooCloseToOtherFly = true;
                     break;
                 }
             }
         }
 
-        if (!tooCloseToOtherFly)
-        {
+        if (!tooCloseToOtherFly){
             return pos;
         }
     }

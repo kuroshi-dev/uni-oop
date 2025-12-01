@@ -2,8 +2,7 @@
 #include <QDebug>
 
 Fly::Fly(QWidget *parent, double flySpeed, int flySize)
-    : speed(flySpeed), size(flySize)
-{
+    : speed(flySpeed), size(flySize){
     label = new QLabel(parent);
     label->setFixedSize(size, size);
     label->setScaledContents(true);
@@ -15,26 +14,22 @@ Fly::Fly(QWidget *parent, double flySpeed, int flySize)
     createPixmap();
 }
 
-Fly::~Fly()
-{
+Fly::~Fly(){
     delete label;
 }
 
-void Fly::createPixmap()
-{
+void Fly::createPixmap(){
     QString imagePath = getImagePath();
 
     QPixmap flyPixmap(imagePath);
-    if (flyPixmap.isNull())
-    {
+    if (flyPixmap.isNull()){
         qDebug() << "Failed to load image:" << imagePath;
         qDebug() << "Creating fallback black pixmap";
 
         flyPixmap = QPixmap(size, size);
         flyPixmap.fill(Qt::black);
     }
-    else
-    {
+    else{
         qDebug() << "Successfully loaded image:" << imagePath;
     }
 
@@ -43,17 +38,14 @@ void Fly::createPixmap()
     label->raise();
 }
 
-void Fly::update(const QPointF &cursorPos, const QPointF &windowPos)
-{
+void Fly::update(QPointF &cursorPos, QPointF &windowPos){
     QPointF direction = position - cursorPos;
     double distToCursor = std::sqrt(direction.x() * direction.x() + direction.y() * direction.y());
 
-    if (distToCursor < 120.0 && distToCursor > 0)
-    {
+    if (distToCursor < 120.0 && distToCursor > 0){
         moveAwayFromCursor(cursorPos);
     }
-    else
-    {
+    else{
         moveRandomly();
     }
 
@@ -62,13 +54,11 @@ void Fly::update(const QPointF &cursorPos, const QPointF &windowPos)
     setPosition(position);
 }
 
-void Fly::moveAwayFromCursor(const QPointF &cursorPos)
-{
+void Fly::moveAwayFromCursor(QPointF &cursorPos){
     QPointF direction = position - cursorPos;
     double dist = std::sqrt(direction.x() * direction.x() + direction.y() * direction.y());
 
-    if (dist > 0)
-    {
+    if (dist > 0){
         direction /= dist;
         double panicFactor = (120.0 - dist) / 120.0;
         panicFactor = std::max(0.0, std::min(1.0, panicFactor));
@@ -76,59 +66,50 @@ void Fly::moveAwayFromCursor(const QPointF &cursorPos)
     }
 }
 
-void Fly::moveRandomly()
-{
+void Fly::moveRandomly(){
     double randomX = (QRandomGenerator::global()->generateDouble() - 0.5) * 2.0;
     double randomY = (QRandomGenerator::global()->generateDouble() - 0.5) * 2.0;
     velocity += QPointF(randomX * speed * 0.3, randomY * speed * 0.3);
 
     // Limit maximum speed
     double currentSpeed = std::sqrt(velocity.x() * velocity.x() + velocity.y() * velocity.y());
-    if (currentSpeed > speed * 2.0)
-    {
+    if (currentSpeed > speed * 2.0){
         velocity = velocity / currentSpeed * speed * 2.0;
     }
 }
 
-void Fly::setPosition(const QPointF &pos)
-{
+void Fly::setPosition(QPointF &pos){
     position = pos;
     label->move(pos.x() - size / 2, pos.y() - size / 2);
     label->setVisible(true);
 }
 
-void Fly::checkBounds(int windowWidth, int windowHeight)
-{
+void Fly::checkBounds(int windowWidth, int windowHeight){
     bool bounced = false;
 
-    if (position.x() <= size / 2)
-    {
+    if (position.x() <= size / 2){
         position.setX(size / 2);
         velocity.setX(-velocity.x() * 0.8);
         bounced = true;
     }
-    else if (position.x() >= windowWidth - size / 2)
-    {
+    else if (position.x() >= windowWidth - size / 2){
         position.setX(windowWidth - size / 2);
         velocity.setX(-velocity.x() * 0.8);
         bounced = true;
     }
 
-    if (position.y() <= size / 2 + 50) // UI space
-    {
+    if (position.y() <= size / 2 + 50){
         position.setY(size / 2 + 50);
         velocity.setY(-velocity.y() * 0.8);
         bounced = true;
     }
-    else if (position.y() >= windowHeight - size / 2 - 50)
-    {
+    else if (position.y() >= windowHeight - size / 2 - 50){
         position.setY(windowHeight - size / 2 - 50);
         velocity.setY(-velocity.y() * 0.8);
         bounced = true;
     }
 
-    if (bounced)
-    {
+    if (bounced){
         double randomX = (QRandomGenerator::global()->generateDouble() - 0.5) * speed;
         double randomY = (QRandomGenerator::global()->generateDouble() - 0.5) * speed;
         velocity += QPointF(randomX, randomY);

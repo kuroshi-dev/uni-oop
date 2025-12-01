@@ -1,42 +1,35 @@
 #include "person.h"
 
-Person::Person(string n) : name(n) {}
+Person::Person(string n) : name(n){}
 
-Person::Person(const Person &other) : name(other.name) {}
+Person::Person(Person &other) : name(other.name){}
 
-string Person::getName() const { return name; }
+string Person::getName(){ return name; }
 
-Person &Person::operator=(const Person &other)
-{
-    if (this != &other)
-    {
+Person &Person::operator=(Person &other){
+    if (this != &other){
         name = other.name;
     }
     return *this;
 }
 
-bool Person::operator==(const Person &other) const
-{
+bool Person::operator==(Person &other){
     return name == other.name;
 }
 
-bool Person::operator!=(const Person &other) const
-{
+bool Person::operator!=(Person &other){
     return !(*this == other);
 }
 
-bool Person::operator<(const Person &other) const
-{
+bool Person::operator<(Person &other){
     return name < other.name;
 }
 
-bool Person::operator>(const Person &other) const
-{
+bool Person::operator>(Person &other){
     return name > other.name;
 }
 
-ostream &operator<<(ostream &out, const Person &person)
-{
+ostream &operator<<(ostream &out, Person &person){
     out << "Person: " << person.name;
     return out;
 }

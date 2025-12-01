@@ -1,60 +1,50 @@
 #include "musician.h"
 
 Musician::Musician(string n, string p, string instrName, int instrYear)
-    : Manager(n, p), instrument(instrName, instrYear) {}
+    : Manager(n, p), instrument(instrName, instrYear){}
 
-Musician::Musician(const Musician &other) : Manager(other), instrument(other.instrument) {}
+Musician::Musician(Musician &other) : Manager(other), instrument(other.instrument){}
 
-void Musician::displayInfo() const
-{
+void Musician::displayInfo(){
     cout << "[Musician] " << name << endl;
     cout << "   Contact: " << phone << endl;
     cout << "   ";
     instrument.displayInfo();
 }
 
-string Musician::getInstrumentName() const
-{
+string Musician::getInstrumentName(){
     return instrument.getName();
 }
 
-const Instrument &Musician::getInstrument() const
-{
+Instrument &Musician::getInstrument(){
     return instrument;
 }
 
-Musician &Musician::operator=(const Musician &other)
-{
-    if (this != &other)
-    {
+Musician &Musician::operator=(Musician &other){
+    if (this != &other){
         Manager::operator=(other);
         instrument = other.instrument;
     }
     return *this;
 }
 
-bool Musician::operator==(const Musician &other) const
-{
+bool Musician::operator==(Musician &other){
     return Manager::operator==(other) && instrument == other.instrument;
 }
 
-bool Musician::operator!=(const Musician &other) const
-{
+bool Musician::operator!=(Musician &other){
     return !(*this == other);
 }
 
-bool Musician::operator<(const Musician &other) const
-{
+bool Musician::operator<(Musician &other){
     return instrument < other.instrument;
 }
 
-bool Musician::operator>(const Musician &other) const
-{
+bool Musician::operator>(Musician &other){
     return instrument > other.instrument;
 }
 
-ostream &operator<<(ostream &out, const Musician &musician)
-{
+ostream &operator<<(ostream &out, Musician &musician){
     out << "[Musician] " << musician.name << " | Phone: " << musician.phone << " | " << musician.instrument;
     return out;
 }

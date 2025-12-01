@@ -15,24 +15,24 @@ private:
 
 public:
     MusicBand(string n = "", string s = "");
-    MusicBand(const MusicBand &other);
+    MusicBand(MusicBand &other);
     ~MusicBand();
 
     void addMember(Musician *m);
     void removeMember(int index);
-    void showBand() const;
-    int getCount() const;
-    const string &getName() const;
-    const string &getStyle() const;
-    const vector<Musician *> &getMembers() const;
+    void showBand();
+    int getCount();
+    string &getName();
+    string &getStyle();
+    vector<Musician *> &getMembers();
 
-    MusicBand &operator=(const MusicBand &other);
-    bool operator==(const MusicBand &other) const;
-    bool operator!=(const MusicBand &other) const;
-    MusicBand operator+(const MusicBand &other) const;
+    MusicBand &operator=(MusicBand &other);
+    bool operator==(MusicBand &other);
+    bool operator!=(MusicBand &other);
+    MusicBand operator+(MusicBand &other);
     MusicBand &operator+=(Musician *musician);
     MusicBand &operator-=(int index);
-    Musician *operator[](int index) const;
+    Musician *operator[](int index);
 
-    friend ostream &operator<<(ostream &out, const MusicBand &band);
+    friend ostream &operator<<(ostream &out, MusicBand &band);
 };

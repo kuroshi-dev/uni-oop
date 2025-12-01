@@ -2,46 +2,38 @@
 
 using namespace std;
 
-String::String() : data(nullptr), length(0)
-{
+String::String() : data(nullptr), length(0){
     data = new char[1];
     data[0] = '\0';
 }
 
-String::String(const char *str)
-{
-    if (str == nullptr)
-    {
+String::String(char *str){
+    if (str == nullptr){
         length = 0;
         data = new char[1];
         data[0] = '\0';
     }
-    else
-    {
+    else{
         length = strlen(str);
         data = new char[length + 1];
         strcpy(data, str);
     }
 }
 
-String::String(const String &other)
-{
+String::String(String &other){
     length = other.length;
     data = new char[length + 1];
     strcpy(data, other.data);
 }
 
-String::~String()
-{
+String::~String(){
     delete[] data;
 }
 
 // --------------------------------------------------
 
-String &String::operator=(const String &other)
-{
-    if (this != &other)
-    {
+String &String::operator=(String &other){
+    if (this != &other){
         delete[] data;
         length = other.length;
         data = new char[length + 1];
@@ -50,8 +42,7 @@ String &String::operator=(const String &other)
     return *this;
 }
 
-String String::operator+(const String &other) const
-{
+String String::operator+(String &other){
     String result;
     result.length = this->length + other.length;
     delete[] result.data;
@@ -63,53 +54,36 @@ String String::operator+(const String &other) const
     return result;
 }
 
-bool String::operator==(const String &other) const
-{
+bool String::operator==(String &other){
     return strcmp(this->data, other.data) == 0;
 }
 
-bool String::operator!=(const String &other) const
-{
+bool String::operator!=(String &other){
     return !(*this == other);
 }
 
-char &String::operator[](size_t index)
-{
-    if (index >= length)
-    {
+char &String::operator[](size_t index){
+    if (index >= length){
         throw std::out_of_range("Index out of bounds");
     }
     return data[index];
 }
 
-const char &String::operator[](size_t index) const
-{
-    if (index >= length)
-    {
-        throw std::out_of_range("Index out of bounds");
-    }
-    return data[index];
-}
-
-std::ostream &operator<<(std::ostream &os, const String &str)
-{
+std::ostream &operator<<(std::ostream &os, String &str){
     os << str.data;
     return os;
 }
 
 // ----------------------------------------
 
-size_t String::getLength() const
-{
+size_t String::getLength(){
     return length;
 }
 
-const char *String::c_str() const
-{
+char *String::c_str(){
     return data;
 }
 
-bool String::isEmpty() const
-{
+bool String::isEmpty(){
     return length == 0;
 }

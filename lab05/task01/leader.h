@@ -10,21 +10,21 @@ private:
 
 public:
     Leader(string n = "", string p = "", string instrName = "", int instrYear = 0, int exp = 0);
-    Leader(const Leader &other);
+    Leader(Leader &other);
 
-    void displayInfo() const override;
-    int getExperience() const;
+    void displayInfo() override;
+    int getExperience();
 
-    Leader &operator=(const Leader &other);
-    bool operator==(const Leader &other) const;
-    bool operator!=(const Leader &other) const;
-    bool operator<(const Leader &other) const;
-    bool operator>(const Leader &other) const;
-    Leader operator+(int years) const;
-    Leader operator-(int years) const;
+    Leader &operator=(Leader &other);
+    bool operator==(Leader &other);
+    bool operator!=(Leader &other);
+    bool operator<(Leader &other);
+    bool operator>(Leader &other);
+    Leader operator+(int years);
+    Leader operator-(int years);
     Leader &operator+=(int years);
     Leader &operator-=(int years);
 
-    friend ostream &operator<<(ostream &out, const Leader &leader);
+    friend ostream &operator<<(ostream &out, Leader &leader);
 };
 #endif // LEADER_H

@@ -14,24 +14,23 @@ private:
 
 public:
     String();
-    String(const char *str);
-    String(const String &other);
+    String(char *str);
+    String(String &other);
 
     ~String();
 
-    String &operator=(const String &other);
+    String &operator=(String &other);
 
-    String operator+(const String &other) const;
-    bool operator==(const String &other) const;
-    bool operator!=(const String &other) const;
+    String operator+(String &other);
+    bool operator==(String &other);
+    bool operator!=(String &other);
     char &operator[](size_t index);
-    const char &operator[](size_t index) const;
 
-    friend std::ostream &operator<<(std::ostream &os, const String &str);
+    friend std::ostream &operator<<(std::ostream &os, String &str);
 
-    size_t getLength() const;
-    const char *c_str() const;
-    bool isEmpty() const;
+    size_t getLength();
+    char *c_str();
+    bool isEmpty();
 };
 
 #endif // STRING_H

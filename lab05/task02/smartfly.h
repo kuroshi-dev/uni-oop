@@ -12,11 +12,11 @@ private:
 
 public:
     SmartFly(QWidget *parent);
-    void update(const QPointF &cursorPos, const QPointF &windowPos = QPointF()) override;
-    void setWindowTarget(const QPointF &windowPos) { targetWindow = windowPos; }
+    void update(QPointF &cursorPos, QPointF &windowPos = QPointF()) override;
+    void setWindowTarget(QPointF &windowPos) { targetWindow = windowPos; }
 
 protected:
-    QString getImagePath() const override { return ":/images/smartfly.png"; }
+    QString getImagePath() override { return ":/images/smartfly.png"; }
     void moveTowardsWindow();
 };
 

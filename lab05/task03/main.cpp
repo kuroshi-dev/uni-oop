@@ -2,15 +2,14 @@
 
 using namespace std;
 
-int main()
-{
+int main(){
     cout << "=== Testing String class ===" << endl;
 
     cout << "\n1. Creating String objects:" << endl;
     String str1("Hello");
     String str2("World");
-    String str3;       // empty string
-    String str4(str1); // copy constructor
+    String str3;
+    String str4(str1);
 
     cout << "str1: " << str1 << endl
          << "str2: " << str2 << endl
@@ -29,8 +28,7 @@ int main()
 
     cout << "\n4. Testing character access operator ([]):" << endl
          << "Characters in str1 \"" << str1 << "\":" << endl;
-    for (size_t i = 0; i < str1.getLength(); ++i)
-    {
+    for (size_t i = 0; i < str1.getLength(); ++i){
         cout << "str1[" << i << "] = '" << str1[i] << "'" << endl;
     }
 
@@ -65,14 +63,12 @@ int main()
          << "str6 == str2: " << (str6 == str2 ? "true" : "false") << endl;
 
     cout << "\n9. Testing exception handling:" << endl;
-    try
-    {
+    try{
         cout << "Trying to access character at index " << str1.getLength() + 5 << endl;
         char c = str1[str1.getLength() + 5];
         cout << "Character: " << c << endl;
     }
-    catch (const out_of_range &e)
-    {
+    catch (out_of_range &e){
         cout << "Caught exception: " << e.what() << endl;
     }
 

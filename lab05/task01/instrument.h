@@ -14,23 +14,23 @@ private:
 
 public:
     Instrument(string n = "", int y = 0);
-    Instrument(const Instrument &other);
+    Instrument(Instrument &other);
 
-    string getName() const;
-    int getYearMade() const;
-    void displayInfo() const;
+    string getName();
+    int getYearMade();
+    void displayInfo();
 
-    Instrument &operator=(const Instrument &other);
-    bool operator==(const Instrument &other) const;
-    bool operator!=(const Instrument &other) const;
-    bool operator<(const Instrument &other) const;
-    bool operator>(const Instrument &other) const;
-    Instrument operator+(int years) const;
-    Instrument operator-(int years) const;
+    Instrument &operator=(Instrument &other);
+    bool operator==(Instrument &other);
+    bool operator!=(Instrument &other);
+    bool operator<(Instrument &other);
+    bool operator>(Instrument &other);
+    Instrument operator+(int years);
+    Instrument operator-(int years);
     Instrument &operator+=(int years);
     Instrument &operator-=(int years);
 
-    friend ostream &operator<<(ostream &out, const Instrument &instr);
+    friend ostream &operator<<(ostream &out, Instrument &instr);
     friend istream &operator>>(istream &in, Instrument &instr);
 };
 
