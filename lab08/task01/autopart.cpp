@@ -1,0 +1,36 @@
+#include "autopart.h"
+
+AutoPart::AutoPart(string n, string m, double p, int q)
+    : name(n), manufacturer(m), price(p), quantity(q){}
+
+string AutoPart::getName() const{
+    return name;
+}
+
+string AutoPart::getManufacturer() const{
+    return manufacturer;
+}
+
+double AutoPart::getPrice() const{
+    return price;
+}
+
+int AutoPart::getQuantity() const{
+    return quantity;
+}
+
+void AutoPart::setName(string n){
+    name = n;
+}
+
+void AutoPart::setManufacturer(string m){
+    manufacturer = m;
+}
+
+void AutoPart::setPrice(double p){
+    price = p;
+}
+
+void AutoPart::setQuantity(int q){
+    quantity = q;
+}
