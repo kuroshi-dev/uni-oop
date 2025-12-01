@@ -27,19 +27,16 @@ public:
     void setPrice(double p);
     void setQuantity(int q);
 
-    // Оператор порівняння для set
     bool operator<(AutoPart& other){
         if (name != other.name) return name < other.name;
         return manufacturer < other.manufacturer;
     }
 
-    // Оператор рівності
     bool operator==(AutoPart& other){
         return name == other.name && manufacturer == other.manufacturer;
     }
 };
 
-// Структура для зберігання історії змін
 struct HistoryEntry{
     string action;
     AutoPart part;
@@ -49,7 +46,6 @@ struct HistoryEntry{
         : action(act), part(p), timestamp(ts){}
 };
 
-// Структура для черги постачання
 struct SupplyOrder{
     AutoPart part;
     string orderDate;
@@ -59,7 +55,6 @@ struct SupplyOrder{
         : part(p), orderDate(date), isUrgent(urgent){}
 };
 
-// Компаратор для priority_queue (найменша кількість = найвищий пріоритет)
 struct LowStockComparator{
     bool operator()(AutoPart& a, AutoPart& b){
         return a.getQuantity() > b.getQuantity();
