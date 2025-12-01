@@ -13,25 +13,22 @@ private:
     size_t length;
 
 public:
-    String();                    // Конструктор по умолчанию
-    String(const char *str);     // Конструктор от C-строки
-    String(const String &other); // Конструктор копирования
+    String();
+    String(const char *str);
+    String(const String &other);
 
     ~String();
 
     String &operator=(const String &other);
 
-    // Перегруженные операторы
-    String operator+(const String &other) const; // Конкатенация
-    bool operator==(const String &other) const;  // Сравнение на равенство
-    bool operator!=(const String &other) const;  // Сравнение на неравенство
-    char &operator[](size_t index);              // Доступ к символу
-    const char &operator[](size_t index) const;  // Константный доступ к символу
+    String operator+(const String &other) const;
+    bool operator==(const String &other) const;
+    bool operator!=(const String &other) const;
+    char &operator[](size_t index);
+    const char &operator[](size_t index) const;
 
-    // Дружественная функция для вывода
     friend std::ostream &operator<<(std::ostream &os, const String &str);
 
-    // Дополнительные методы
     size_t getLength() const;
     const char *c_str() const;
     bool isEmpty() const;
