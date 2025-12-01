@@ -1,0 +1,357 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>WarehouseWindow</class>
+ <widget class="QMainWindow" name="WarehouseWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>700</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Система керування складом автозапчастин</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow {
+    background-color: #1A1A1A;
+    color: #E0E0E0;
+    font-family: &quot;Segoe UI&quot;, sans-serif;
+    font-size: 11pt;
+}
+
+QWidget#centralwidget {
+    background-color: #1A1A1A;
+    border-radius: 10px;
+}
+
+QLabel {
+    color: #E8E8E8;
+    font-weight: bold;
+}
+
+QLineEdit {
+    background-color: #252525;
+    color: #E8E8E8;
+    border: 1px solid #404040;
+    border-radius: 6px;
+    padding: 6px 10px;
+    selection-background-color: #2A5599;
+}
+QLineEdit:focus {
+    border: 1px solid #4A7BC8;
+    background-color: #202020;
+}
+
+QSpinBox, QDoubleSpinBox {
+    background-color: #252525;
+    color: #E8E8E8;
+    border: 1px solid #404040;
+    border-radius: 6px;
+    padding: 6px 10px;
+    selection-background-color: #2A5599;
+}
+QSpinBox:focus, QDoubleSpinBox:focus {
+    border: 1px solid #4A7BC8;
+    background-color: #202020;
+}
+
+QPushButton {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                                stop:0 #1E3A8A, stop:0.5 #2563EB, stop:1 #3B82F6);
+    color: #FFFFFF;
+    border: none;
+    border-radius: 8px;
+    padding: 8px 20px;
+    font-weight: bold;
+    min-width: 80px;
+}
+QPushButton:hover {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                                stop:0 #2563EB, stop:0.5 #3B82F6, stop:1 #60A5FA);
+    border: 4px solid rgba(59, 130, 246, 0.6);
+    padding: 4px 16px;
+}
+QPushButton:pressed {
+    background: qlineargradient(x1:0, y1:0, x2:1, y2:1,
+                                stop:0 #1E40AF, stop:0.5 #1D4ED8, stop:1 #2563EB);
+    border: none;
+    padding: 8px 20px;
+}
+
+QTableWidget {
+    background-color: #1A1A1A;
+    color: #D8D8D8;
+    border: 1px solid #404040;
+    gridline-color: #404040;
+    selection-background-color: #2A5599;
+    selection-color: #FFFFFF;
+    border-radius: 6px;
+}
+QTableWidget::item {
+    background-color: #1A1A1A;
+    padding: 5px;
+}
+QTableWidget::item:selected {
+    background-color: #2A5599;
+}
+
+QHeaderView::section {
+    background-color: #252525;
+    color: #C8C8C8;
+    font-weight: bold;
+    border: 1px solid #404040;
+    padding: 8px;
+    text-align: center;
+}
+QHeaderView::section:hover {
+    background-color: #303030;
+}
+
+QHeaderView {
+    background-color: #1A1A1A;
+}
+
+QTableWidget QTableCornerButton::section {
+    background-color: #252525;
+    border: 1px solid #404040;
+}
+
+QScrollBar:vertical {
+    background-color: #252525;
+    width: 12px;
+    margin: 0px;
+    border-radius: 6px;
+}
+QScrollBar::handle:vertical {
+    background-color: #333333;
+    min-height: 20px;
+    border-radius: 6px;
+}
+QScrollBar::handle:vertical:hover {
+    background-color: #4A7BC8;
+}
+QScrollBar::add-line:vertical, QScrollBar::sub-line:vertical {
+    height: 0px;
+}
+QScrollBar:horizontal {
+    background-color: #252525;
+    height: 12px;
+    border-radius: 6px;
+}
+QScrollBar::handle:horizontal {
+    background-color: #333333;
+    min-width: 20px;
+    border-radius: 6px;
+}
+QScrollBar::handle:horizontal:hover {
+    background-color: #4A7BC8;
+}
+QScrollBar::add-line:horizontal, QScrollBar::sub-line:horizontal {
+    width: 0px;
+}
+
+QSpinBox::up-button, QDoubleSpinBox::up-button {
+    background-color: #333333;
+    border: 1px solid #444444;
+    border-radius: 3px;
+    width: 18px;
+    margin: 2px;
+}
+QSpinBox::up-button:hover, QDoubleSpinBox::up-button:hover {
+    background-color: #4A7BC8;
+}
+QSpinBox::down-button, QDoubleSpinBox::down-button {
+    background-color: #333333;
+    border: 1px solid #444444;
+    border-radius: 3px;
+    width: 18px;
+    margin: 2px;
+}
+QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {
+    background-color: #4A7BC8;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QVBoxLayout" name="verticalLayout">
+    <item>
+     <widget class="QLabel" name="tableLabel">
+      <property name="text">
+       <string>&lt;h3 style=&quot;color: #3B82F6;&quot;&gt;📦 Список запчастин на складі&lt;/h3&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="sortLayout">
+      <item>
+       <widget class="QLabel" name="sortLabel">
+        <property name="text">
+         <string>Сортування:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="sortNameButton">
+        <property name="text">
+         <string>За назвою</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="sortPriceButton">
+        <property name="text">
+         <string>За ціною</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_2">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <widget class="QTableWidget" name="tableWidget"/>
+    </item>
+    <item>
+     <widget class="QLabel" name="addLabel">
+      <property name="text">
+       <string>&lt;h3 style=&quot;color: #3B82F6;&quot;&gt;➕ Додати запчастину&lt;/h3&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item>
+     <layout class="QGridLayout" name="inputLayout">
+      <item row="0" column="0">
+       <widget class="QLabel" name="nameLabel">
+        <property name="text">
+         <string>Назва:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="1">
+       <widget class="QLineEdit" name="nameLineEdit">
+        <property name="placeholderText">
+         <string>Введіть назву запчастини</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="2">
+       <widget class="QLabel" name="manufacturerLabel">
+        <property name="text">
+         <string>Виробник:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="0" column="3">
+       <widget class="QLineEdit" name="manufacturerLineEdit">
+        <property name="placeholderText">
+         <string>Введіть виробника</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="0">
+       <widget class="QLabel" name="priceLabel">
+        <property name="text">
+         <string>Ціна:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="1">
+       <widget class="QDoubleSpinBox" name="priceSpinBox">
+        <property name="suffix">
+         <string> грн</string>
+        </property>
+        <property name="decimals">
+         <number>2</number>
+        </property>
+        <property name="maximum">
+         <double>1000000.000000000000000</double>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="2">
+       <widget class="QLabel" name="quantityLabel">
+        <property name="text">
+         <string>Кількість:</string>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="3">
+       <widget class="QSpinBox" name="quantitySpinBox">
+        <property name="maximum">
+         <number>10000</number>
+        </property>
+       </widget>
+      </item>
+      <item row="1" column="4">
+       <widget class="QPushButton" name="addButton">
+        <property name="text">
+         <string>Додати</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+    <item>
+     <layout class="QHBoxLayout" name="searchLayout">
+      <item>
+       <widget class="QLabel" name="searchLabel">
+        <property name="text">
+         <string>🔍 Пошук за виробником:</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLineEdit" name="searchLineEdit">
+        <property name="placeholderText">
+         <string>Введіть виробника</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+      <item>
+       <widget class="QPushButton" name="searchButton">
+        <property name="text">
+         <string>Пошук</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="showAllButton">
+        <property name="text">
+         <string>Показати всі</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </item>
+   </layout>
+  </widget>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
