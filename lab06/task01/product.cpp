@@ -1,28 +1,30 @@
 #include "Product.h"
 
-Product::Product(const std::string& n, double p, int q)
-    : name(n), price(p), quantity(q) {}
+using namespace std;
 
-std::string Product::getName() const {
+Product::Product(string& n, double p, int q)
+    : name(n), price(p), quantity(q){}
+
+string Product::getName(){
     return name;
 }
 
-double Product::getPrice() const {
+double Product::getPrice(){
     return price;
 }
 
-int Product::getQuantity() const {
+int Product::getQuantity(){
     return quantity;
 }
 
-void Product::setName(const std::string& n) {
+void Product::setName(string& n){
     name = n;
 }
 
-void Product::setPrice(double p) {
+void Product::setPrice(double p){
     price = p;
 }
 
-void Product::setQuantity(int q) {
+void Product::setQuantity(int q){
     quantity = q;
 }

@@ -5,39 +5,41 @@
 #include <algorithm>
 #include <string>
 
+using namespace std;
+
 template <typename T>
 class Inventory {
 private:
-    std::vector<T> items;
+    vector<T> items;
 
 public:
 
-    void addItem(const T& item);
+    void addItem(T& item);
 
-    bool removeItem(const std::string& name);
+    bool removeItem(string& name);
 
-    std::vector<T> getAllItems() const;
+    vector<T> getAllItems();
 
-    std::vector<T> findByPrice(double price) const;
+    vector<T> findByPrice(double price);
 
     void clear();
 
-    size_t size() const;
+    size_t size();
 };
 
 template <typename T>
-void Inventory<T>::addItem(const T& item) {
+void Inventory<T>::addItem(T& item){
     items.push_back(item);
 }
 
 template <typename T>
-bool Inventory<T>::removeItem(const std::string& name) {
-    auto it = std::find_if(items.begin(), items.end(),
-                           [&name](const T& item) {
+bool Inventory<T>::removeItem(string& name){
+    auto it = find_if(items.begin(), items.end(),
+                           [&name](T& item){
                                return item.getName() == name;
                            });
 
-    if (it != items.end()) {
+    if (it != items.end()){
         items.erase(it);
         return true;
     }
@@ -45,15 +47,15 @@ bool Inventory<T>::removeItem(const std::string& name) {
 }
 
 template <typename T>
-std::vector<T> Inventory<T>::getAllItems() const {
+vector<T> Inventory<T>::getAllItems(){
     return items;
 }
 
 template <typename T>
-std::vector<T> Inventory<T>::findByPrice(double price) const {
-    std::vector<T> result;
-    for (const auto& item : items) {
-        if (item.getPrice() == price) {
+vector<T> Inventory<T>::findByPrice(double price){
+    vector<T> result;
+    for (auto& item : items){
+        if (item.getPrice() == price){
             result.push_back(item);
         }
     }
@@ -61,12 +63,12 @@ std::vector<T> Inventory<T>::findByPrice(double price) const {
 }
 
 template <typename T>
-void Inventory<T>::clear() {
+void Inventory<T>::clear(){
     items.clear();
 }
 
 template <typename T>
-size_t Inventory<T>::size() const {
+size_t Inventory<T>::size(){
     return items.size();
 }
 

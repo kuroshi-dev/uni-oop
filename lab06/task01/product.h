@@ -3,21 +3,22 @@
 
 #include <string>
 
+using namespace std;
+
 class Product {
 private:
-    std::string name;
+    string name;
     double price;
     int quantity;
 
 public:
-    Product(const std::string& n, double p, int q);
+    Product(string& n, double p, int q);
 
-    // Методи доступу
-    std::string getName() const;
-    double getPrice() const;
-    int getQuantity() const;
+    string getName();
+    double getPrice();
+    int getQuantity();
 
-    void setName(const std::string& n);
+    void setName(string& n);
     void setPrice(double p);
     void setQuantity(int q);
 };

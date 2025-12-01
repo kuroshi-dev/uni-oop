@@ -1,9 +1,10 @@
 #include "InventoryWindow.h"
 #include "ui_InventoryWindow.h"
 
+using namespace std;
+
 InventoryWindow::InventoryWindow(QWidget *parent)
-    : QMainWindow(parent), ui(new Ui::InventoryWindow)
-{
+    : QMainWindow(parent), ui(new Ui::InventoryWindow){
     ui->setupUi(this);
 
     ui->tableWidget->setColumnCount(4);
@@ -16,20 +17,17 @@ InventoryWindow::InventoryWindow(QWidget *parent)
     addSampleProducts();
 }
 
-InventoryWindow::~InventoryWindow()
-{
+InventoryWindow::~InventoryWindow(){
     delete ui;
 }
 
-void InventoryWindow::on_addButton_clicked()
-{
+void InventoryWindow::on_addButton_clicked(){
     QString name = ui->nameLineEdit->text().trimmed();
     double price = ui->priceSpinBox->value();
     int quantity = ui->quantitySpinBox->value();
 
-    if (name.isEmpty())
-    {
-        QMessageBox::warning(this, "Помилка", "Введіть назву товару!");
+    if (name.isEmpty()){
+        QMessageBox::warning(this, "Pomilka", "Введіть назву товару!");
         return;
     }
 
@@ -44,18 +42,15 @@ void InventoryWindow::on_addButton_clicked()
     QMessageBox::information(this, "Успіх", "Товар успішно додано!");
 }
 
-void InventoryWindow::on_showAllButton_clicked()
-{
+void InventoryWindow::on_showAllButton_clicked(){
     displayProducts(inventory.getAllItems());
 }
 
-void InventoryWindow::on_searchButton_clicked()
-{
+void InventoryWindow::on_searchButton_clicked(){
     double price = ui->searchPriceSpinBox->value();
     auto found = inventory.findByPrice(price);
 
-    if (found.empty())
-    {
+    if (found.empty()){
         QMessageBox::information(this, "Результат пошуку",
                                  "Товарів з такою ціною не знайдено!");
     }
@@ -63,34 +58,28 @@ void InventoryWindow::on_searchButton_clicked()
     displayProducts(found);
 }
 
-void InventoryWindow::removeProduct(const std::string &name)
-{
+void InventoryWindow::removeProduct(string &name){
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Підтвердження",
                                   QString("Видалити товар '%1'?").arg(QString::fromStdString(name)),
                                   QMessageBox::Yes | QMessageBox::No);
 
-    if (reply == QMessageBox::Yes)
-    {
-        if (inventory.removeItem(name))
-        {
+    if (reply == QMessageBox::Yes){
+        if (inventory.removeItem(name)){
             on_showAllButton_clicked();
             QMessageBox::information(this, "Успіх", "Товар видалено!");
         }
-        else
-        {
+        else{
             QMessageBox::warning(this, "Помилка", "Не вдалося видалити товар!");
         }
     }
 }
 
-void InventoryWindow::displayProducts(const std::vector<Product> &products)
-{
+void InventoryWindow::displayProducts(vector<Product> &products){
     ui->tableWidget->setRowCount(0);
 
-    for (size_t i = 0; i < products.size(); ++i)
-    {
-        const Product &product = products[i];
+    for (size_t i = 0; i < products.size(); ++i){
+        Product &product = products[i];
 
         int row = ui->tableWidget->rowCount();
         ui->tableWidget->insertRow(row);
@@ -104,10 +93,11 @@ void InventoryWindow::displayProducts(const std::vector<Product> &products)
 
         QPushButton *deleteButton = new QPushButton("Видалити");
         deleteButton->setMaximumWidth(100);
-        std::string name = product.getName();
+        string name = product.getName();
         connect(deleteButton, &QPushButton::clicked,
-                [this, name]()
-                { removeProduct(name); });
+                [this, name](){
+                    removeProduct(name);
+                });
 
         QWidget *widget = new QWidget();
         QHBoxLayout *layout = new QHBoxLayout(widget);
@@ -119,14 +109,12 @@ void InventoryWindow::displayProducts(const std::vector<Product> &products)
         ui->tableWidget->setRowHeight(row, 40);
     }
 
-    for (int i = 0; i < 3; ++i)
-    {
+    for (int i = 0; i < 3; ++i){
         ui->tableWidget->resizeColumnToContents(i);
     }
 }
 
-void InventoryWindow::addSampleProducts()
-{
+void InventoryWindow::addSampleProducts(){
     inventory.addItem(Product("Ноутбук HP", 25000.00, 5));
     inventory.addItem(Product("Миша Logitech", 500.00, 20));
     inventory.addItem(Product("Клавіатура", 1200.00, 15));
