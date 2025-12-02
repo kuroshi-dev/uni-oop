@@ -25,13 +25,13 @@ private slots:
     void on_addButton_clicked();
     void on_searchButton_clicked();
     void on_showAllButton_clicked();
-    void removeProduct(std::string& name);
+    void removeProduct(std::string name);
 
 private:
     Ui::InventoryWindow *ui;
     Inventory<Product> inventory;
 
-    void displayProducts(std::vector<Product>& products);
+    void displayProducts(std::vector<Product> products);
     void addSampleProducts();
 };
 

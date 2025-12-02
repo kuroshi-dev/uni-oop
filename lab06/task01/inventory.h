@@ -14,9 +14,9 @@ private:
 
 public:
 
-    void addItem(T& item);
+    void addItem(T item);
 
-    bool removeItem(string& name);
+    bool removeItem(string name);
 
     vector<T> getAllItems();
 
@@ -28,14 +28,14 @@ public:
 };
 
 template <typename T>
-void Inventory<T>::addItem(T& item){
+void Inventory<T>::addItem(T item){
     items.push_back(item);
 }
 
 template <typename T>
-bool Inventory<T>::removeItem(string& name){
+bool Inventory<T>::removeItem(string name){
     auto it = find_if(items.begin(), items.end(),
-                           [&name](T& item){
+                           [&name](T item){
                                return item.getName() == name;
                            });
 
@@ -54,7 +54,7 @@ vector<T> Inventory<T>::getAllItems(){
 template <typename T>
 vector<T> Inventory<T>::findByPrice(double price){
     vector<T> result;
-    for (auto& item : items){
+    for (auto item : items){
         if (item.getPrice() == price){
             result.push_back(item);
         }

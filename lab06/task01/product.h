@@ -12,13 +12,13 @@ private:
     int quantity;
 
 public:
-    Product(string& n, double p, int q);
+    Product(string n, double p, int q);
 
     string getName();
     double getPrice();
     int getQuantity();
 
-    void setName(string& n);
+    void setName(string n);
     void setPrice(double p);
     void setQuantity(int q);
 };

@@ -58,7 +58,7 @@ void InventoryWindow::on_searchButton_clicked(){
     displayProducts(found);
 }
 
-void InventoryWindow::removeProduct(string &name){
+void InventoryWindow::removeProduct(string name){
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Підтвердження",
                                   QString("Видалити товар '%1'?").arg(QString::fromStdString(name)),
@@ -75,11 +75,11 @@ void InventoryWindow::removeProduct(string &name){
     }
 }
 
-void InventoryWindow::displayProducts(vector<Product> &products){
+void InventoryWindow::displayProducts(vector<Product> products){
     ui->tableWidget->setRowCount(0);
 
     for (size_t i = 0; i < products.size(); ++i){
-        Product &product = products[i];
+        Product product = products[i];
 
         int row = ui->tableWidget->rowCount();
         ui->tableWidget->insertRow(row);

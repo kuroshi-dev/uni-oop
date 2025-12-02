@@ -2,7 +2,7 @@
 
 using namespace std;
 
-Product::Product(string& n, double p, int q)
+Product::Product(string n, double p, int q)
     : name(n), price(p), quantity(q){}
 
 string Product::getName(){
@@ -17,7 +17,7 @@ int Product::getQuantity(){
     return quantity;
 }
 
-void Product::setName(string& n){
+void Product::setName(string n){
     name = n;
 }
 
