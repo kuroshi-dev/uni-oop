@@ -5,19 +5,19 @@ using namespace std;
 AutoPart::AutoPart(string n, string m, double p, int q)
     : name(n), manufacturer(m), price(p), quantity(q) {}
 
-string AutoPart::getName(){
+string AutoPart::getName() const{
     return name;
 }
 
-string AutoPart::getManufacturer(){
+string AutoPart::getManufacturer() const{
     return manufacturer;
 }
 
-double AutoPart::getPrice(){
+double AutoPart::getPrice() const{
     return price;
 }
 
-int AutoPart::getQuantity(){
+int AutoPart::getQuantity() const{
     return quantity;
 }
 

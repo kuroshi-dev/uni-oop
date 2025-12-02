@@ -15,10 +15,10 @@ private:
 public:
     AutoPart(string n, string m, double p, int q);
 
-    string getName();
-    string getManufacturer();
-    double getPrice();
-    int getQuantity();
+    string getName() const;
+    string getManufacturer() const;
+    double getPrice() const;
+    int getQuantity() const;
 
     void setName(string n);
     void setManufacturer(string m);

@@ -15,7 +15,11 @@ private:
 public:
     void addPart(T part);
 
+    void addMultipleParts(vector<T> newParts);
+
     bool removePart(string name);
+
+    int removeMultipleParts(vector<string> names);
 
     bool updatePart(string name, double newPrice, int newQuantity);
 
@@ -38,6 +42,13 @@ void Warehouse<T>::addPart(T part){
 }
 
 template <typename T>
+void Warehouse<T>::addMultipleParts(vector<T> newParts){
+    for (auto& part : newParts) {
+        parts.push_back(part);
+    }
+}
+
+template <typename T>
 bool Warehouse<T>::removePart(string name){
     auto it = find_if(parts.begin(), parts.end(),
                            [&name](T& part) {
@@ -49,6 +60,17 @@ bool Warehouse<T>::removePart(string name){
         return true;
     }
     return false;
+}
+
+template <typename T>
+int Warehouse<T>::removeMultipleParts(vector<string> names){
+    int removed = 0;
+    for (const auto& name : names) {
+        if (removePart(name)) {
+            removed++;
+        }
+    }
+    return removed;
 }
 
 template <typename T>

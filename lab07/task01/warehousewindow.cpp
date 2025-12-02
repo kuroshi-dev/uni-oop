@@ -258,3 +258,183 @@ void WarehouseWindow::addSampleParts(){
 
     on_showAllButton_clicked();
 }
+
+void WarehouseWindow::on_addMultipleButton_clicked(){
+    QDialog dialog(this);
+    dialog.setWindowTitle("Додавання кількох запчастин");
+    dialog.setMinimumWidth(500);
+    dialog.setMinimumHeight(400);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(&dialog);
+
+    QLabel *titleLabel = new QLabel("Додайте запчастини (одна на рядок)");
+    QFont titleFont = titleLabel->font();
+    titleFont.setPointSize(11);
+    titleFont.setBold(true);
+    titleLabel->setFont(titleFont);
+    mainLayout->addWidget(titleLabel);
+
+    QLabel *instructionLabel = new QLabel(
+        "Формат: Назва | Виробник | Ціна | Кількість\n"
+        "Приклад: Фільтр салону | Bosch | 450.50 | 10");
+    instructionLabel->setStyleSheet("color: gray; font-size: 9pt;");
+    mainLayout->addWidget(instructionLabel);
+
+    QTextEdit *textEdit = new QTextEdit();
+    textEdit->setPlaceholderText("Введіть запчастини...");
+    mainLayout->addWidget(textEdit);
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(
+        QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    mainLayout->addWidget(buttonBox);
+
+    if (dialog.exec() == QDialog::Accepted){
+        QString text = textEdit->toPlainText().trimmed();
+        if (text.isEmpty()){
+            QMessageBox::warning(this, "Помилка", "Введіть хоча б одну запчастину!");
+            return;
+        }
+
+        QStringList lines = text.split('\n', Qt::SkipEmptyParts);
+        vector<AutoPart> newParts;
+        QStringList errors;
+
+        for (int i = 0; i < lines.size(); ++i){
+            QString line = lines[i].trimmed();
+            QStringList parts = line.split('|');
+
+            if (parts.size() != 4){
+                errors.append(QString("Рядок %1: неправильний формат").arg(i + 1));
+                continue;
+            }
+
+            QString name = parts[0].trimmed();
+            QString manufacturer = parts[1].trimmed();
+            QString priceStr = parts[2].trimmed();
+            QString quantityStr = parts[3].trimmed();
+
+            if (name.isEmpty() || manufacturer.isEmpty()){
+                errors.append(QString("Рядок %1: назва або виробник порожні").arg(i + 1));
+                continue;
+            }
+
+            bool priceOk, quantityOk;
+            double price = priceStr.toDouble(&priceOk);
+            int quantity = quantityStr.toInt(&quantityOk);
+
+            if (!priceOk || !quantityOk || price < 0 || quantity < 0){
+                errors.append(QString("Рядок %1: неправильна ціна або кількість").arg(i + 1));
+                continue;
+            }
+
+            newParts.push_back(AutoPart(name.toStdString(), manufacturer.toStdString(), price, quantity));
+        }
+
+        if (!errors.isEmpty()){
+            QMessageBox::warning(this, "Помилки при додаванні",
+                                 "Деякі запчастини не додані:\n" + errors.join("\n"));
+        }
+
+        if (!newParts.empty()){
+            warehouse.addMultipleParts(newParts);
+            on_showAllButton_clicked();
+            QMessageBox::information(this, "Успіх",
+                                     QString("Успішно додано %1 запчастин!").arg(newParts.size()));
+        }
+    }
+}
+
+void WarehouseWindow::on_removeMultipleButton_clicked(){
+    QDialog dialog(this);
+    dialog.setWindowTitle("Видалення кількох запчастин");
+    dialog.setMinimumWidth(500);
+    dialog.setMinimumHeight(400);
+
+    QVBoxLayout *mainLayout = new QVBoxLayout(&dialog);
+
+    QLabel *titleLabel = new QLabel("Виберіть запчастини для видалення");
+    QFont titleFont = titleLabel->font();
+    titleFont.setPointSize(11);
+    titleFont.setBold(true);
+    titleLabel->setFont(titleFont);
+    mainLayout->addWidget(titleLabel);
+
+    QListWidget *listWidget = new QListWidget();
+    auto allParts = warehouse.getAllParts();
+    
+    if (allParts.empty()){
+        QMessageBox::information(this, "Інформація", "Склад порожній!");
+        return;
+    }
+
+    for (const auto& part : allParts){
+        QString itemText = QString("%1 (%2) - %3 грн, к-сть: %4")
+            .arg(QString::fromStdString(part.getName()))
+            .arg(QString::fromStdString(part.getManufacturer()))
+            .arg(part.getPrice(), 0, 'f', 2)
+            .arg(part.getQuantity());
+        
+        QListWidgetItem *item = new QListWidgetItem(itemText);
+        item->setFlags(item->flags() | Qt::ItemIsUserCheckable);
+        item->setCheckState(Qt::Unchecked);
+        item->setData(Qt::UserRole, QString::fromStdString(part.getName()));
+        listWidget->addItem(item);
+    }
+
+    mainLayout->addWidget(listWidget);
+
+    QHBoxLayout *buttonLayout = new QHBoxLayout();
+    QPushButton *selectAllButton = new QPushButton("Вибрати всі");
+    QPushButton *deselectAllButton = new QPushButton("Зняти всі");
+    buttonLayout->addWidget(selectAllButton);
+    buttonLayout->addWidget(deselectAllButton);
+    mainLayout->addLayout(buttonLayout);
+
+    connect(selectAllButton, &QPushButton::clicked, [listWidget](){
+        for (int i = 0; i < listWidget->count(); ++i){
+            listWidget->item(i)->setCheckState(Qt::Checked);
+        }
+    });
+
+    connect(deselectAllButton, &QPushButton::clicked, [listWidget](){
+        for (int i = 0; i < listWidget->count(); ++i){
+            listWidget->item(i)->setCheckState(Qt::Unchecked);
+        }
+    });
+
+    QDialogButtonBox *buttonBox = new QDialogButtonBox(
+        QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+    connect(buttonBox, &QDialogButtonBox::accepted, &dialog, &QDialog::accept);
+    connect(buttonBox, &QDialogButtonBox::rejected, &dialog, &QDialog::reject);
+    mainLayout->addWidget(buttonBox);
+
+    if (dialog.exec() == QDialog::Accepted){
+        vector<string> namesToRemove;
+        
+        for (int i = 0; i < listWidget->count(); ++i){
+            QListWidgetItem *item = listWidget->item(i);
+            if (item->checkState() == Qt::Checked){
+                namesToRemove.push_back(item->data(Qt::UserRole).toString().toStdString());
+            }
+        }
+
+        if (namesToRemove.empty()){
+            QMessageBox::information(this, "Інформація", "Не вибрано жодної запчастини!");
+            return;
+        }
+
+        QMessageBox::StandardButton reply;
+        reply = QMessageBox::question(this, "Підтвердження",
+                                      QString("Видалити %1 запчастин?").arg(namesToRemove.size()),
+                                      QMessageBox::Yes | QMessageBox::No);
+
+        if (reply == QMessageBox::Yes){
+            int removed = warehouse.removeMultipleParts(namesToRemove);
+            on_showAllButton_clicked();
+            QMessageBox::information(this, "Успіх",
+                                     QString("Видалено %1 з %2 запчастин!").arg(removed).arg(namesToRemove.size()));
+        }
+    }
+}

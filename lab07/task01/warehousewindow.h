@@ -15,6 +15,8 @@
 #include <QFormLayout>
 #include <QDialogButtonBox>
 #include <QLabel>
+#include <QTextEdit>
+#include <QListWidget>
 #include <vector>
 #include "autopart.h"
 #include "warehouse.h"
@@ -41,6 +43,8 @@ private slots:
     void on_sortPriceButton_clicked();
     void removePart(string name);
     void updatePart(string name);
+    void on_addMultipleButton_clicked();
+    void on_removeMultipleButton_clicked();
 
 private:
     Ui::WarehouseWindow *ui;

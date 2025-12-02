@@ -306,6 +306,37 @@ QSpinBox::down-button:hover, QDoubleSpinBox::down-button:hover {
      </layout>
     </item>
     <item>
+     <layout class="QHBoxLayout" name="multiActionsLayout">
+      <item>
+       <widget class="QPushButton" name="addMultipleButton">
+        <property name="text">
+         <string>➕ Додати кілька запчастин</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="removeMultipleButton">
+        <property name="text">
+         <string>🗑️ Видалити кілька запчастин</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="horizontalSpacer_3">
+        <property name="orientation">
+         <enum>Qt::Orientation::Horizontal</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>40</width>
+          <height>20</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
+    </item>
+    <item>
      <layout class="QHBoxLayout" name="searchLayout">
       <item>
        <widget class="QLabel" name="searchLabel">
