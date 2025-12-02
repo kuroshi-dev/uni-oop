@@ -14,19 +14,19 @@ private:
 
 public:
     String();
-    String(char *str);
-    String(String &other);
+    String(const char *str);
+    String(const String &other);
 
     ~String();
 
-    String &operator=(String &other);
+    String &operator=(const String &other);
 
-    String operator+(String &other);
-    bool operator==(String &other);
-    bool operator!=(String &other);
+    String operator+(const String &other) const;
+    bool operator==(const String &other) const;
+    bool operator!=(const String &other) const;
     char &operator[](size_t index);
 
-    friend std::ostream &operator<<(std::ostream &os, String &str);
+    friend std::ostream &operator<<(std::ostream &os, const String &str);
 
     size_t getLength();
     char *c_str();

@@ -7,7 +7,7 @@ String::String() : data(nullptr), length(0){
     data[0] = '\0';
 }
 
-String::String(char *str){
+String::String(const char *str){
     if (str == nullptr){
         length = 0;
         data = new char[1];
@@ -20,7 +20,7 @@ String::String(char *str){
     }
 }
 
-String::String(String &other){
+String::String(const String &other){
     length = other.length;
     data = new char[length + 1];
     strcpy(data, other.data);
@@ -32,7 +32,7 @@ String::~String(){
 
 // --------------------------------------------------
 
-String &String::operator=(String &other){
+String &String::operator=(const String &other){
     if (this != &other){
         delete[] data;
         length = other.length;
@@ -42,7 +42,7 @@ String &String::operator=(String &other){
     return *this;
 }
 
-String String::operator+(String &other){
+String String::operator+(const String &other) const{
     String result;
     result.length = this->length + other.length;
     delete[] result.data;
@@ -54,11 +54,11 @@ String String::operator+(String &other){
     return result;
 }
 
-bool String::operator==(String &other){
+bool String::operator==(const String &other) const{
     return strcmp(this->data, other.data) == 0;
 }
 
-bool String::operator!=(String &other){
+bool String::operator!=(const String &other) const{
     return !(*this == other);
 }
 
@@ -69,7 +69,7 @@ char &String::operator[](size_t index){
     return data[index];
 }
 
-std::ostream &operator<<(std::ostream &os, String &str){
+std::ostream &operator<<(std::ostream &os, const String &str){
     os << str.data;
     return os;
 }
