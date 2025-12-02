@@ -13,15 +13,15 @@ private:
     vector<T> parts;
 
 public:
-    void addPart(T& part);
+    void addPart(T part);
 
-    bool removePart(string& name);
+    bool removePart(string name);
 
-    bool updatePart(string& name, double newPrice, int newQuantity);
+    bool updatePart(string name, double newPrice, int newQuantity);
 
     vector<T> getAllParts();
 
-    vector<T> findByManufacturer(string& manufacturer);
+    vector<T> findByManufacturer(string manufacturer);
 
     void sortByName();
 
@@ -33,12 +33,12 @@ public:
 };
 
 template <typename T>
-void Warehouse<T>::addPart(T& part){
+void Warehouse<T>::addPart(T part){
     parts.push_back(part);
 }
 
 template <typename T>
-bool Warehouse<T>::removePart(string& name){
+bool Warehouse<T>::removePart(string name){
     auto it = find_if(parts.begin(), parts.end(),
                            [&name](T& part) {
                                return part.getName() == name;
@@ -52,7 +52,7 @@ bool Warehouse<T>::removePart(string& name){
 }
 
 template <typename T>
-bool Warehouse<T>::updatePart(string& name, double newPrice, int newQuantity){
+bool Warehouse<T>::updatePart(string name, double newPrice, int newQuantity){
     auto it = find_if(parts.begin(), parts.end(),
                            [&name](T& part) {
                                return part.getName() == name;
@@ -72,7 +72,7 @@ vector<T> Warehouse<T>::getAllParts() {
 }
 
 template <typename T>
-vector<T> Warehouse<T>::findByManufacturer(string& manufacturer) {
+vector<T> Warehouse<T>::findByManufacturer(string manufacturer) {
     vector<T> result;
     for (auto& part : parts) {
         if (part.getManufacturer() == manufacturer) {

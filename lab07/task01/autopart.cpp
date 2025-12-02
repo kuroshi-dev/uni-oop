@@ -2,7 +2,7 @@
 
 using namespace std;
 
-AutoPart::AutoPart(string& n, string& m, double p, int q)
+AutoPart::AutoPart(string n, string m, double p, int q)
     : name(n), manufacturer(m), price(p), quantity(q) {}
 
 string AutoPart::getName(){
@@ -21,11 +21,11 @@ int AutoPart::getQuantity(){
     return quantity;
 }
 
-void AutoPart::setName(string& n){
+void AutoPart::setName(string n){
     name = n;
 }
 
-void AutoPart::setManufacturer(string& m){
+void AutoPart::setManufacturer(string m){
     manufacturer = m;
 }
 

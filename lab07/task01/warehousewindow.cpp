@@ -101,7 +101,7 @@ void WarehouseWindow::on_sortPriceButton_clicked(){
     priceSortAscending = !priceSortAscending;
 }
 
-void WarehouseWindow::removePart(string &name) {
+void WarehouseWindow::removePart(string name) {
     QMessageBox::StandardButton reply;
     reply = QMessageBox::question(this, "Підтвердження",
                                   QString("Видалити запчастину '%1'?").arg(QString::fromStdString(name)),
@@ -119,7 +119,7 @@ void WarehouseWindow::removePart(string &name) {
     }
 }
 
-void WarehouseWindow::updatePart(string &name){
+void WarehouseWindow::updatePart(string name){
     auto parts = warehouse.getAllParts();
     auto it = find_if(parts.begin(), parts.end(),
                       [&name](AutoPart &part)
@@ -197,7 +197,7 @@ void WarehouseWindow::updatePart(string &name){
     }
 }
 
-void WarehouseWindow::displayParts(vector<AutoPart> &parts){
+void WarehouseWindow::displayParts(vector<AutoPart> parts){
     ui->tableWidget->setRowCount(0);
 
     for (size_t i = 0; i < parts.size(); ++i){

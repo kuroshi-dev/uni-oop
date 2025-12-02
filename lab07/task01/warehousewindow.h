@@ -39,8 +39,8 @@ private slots:
     void on_searchButton_clicked();
     void on_sortNameButton_clicked();
     void on_sortPriceButton_clicked();
-    void removePart(string &name);
-    void updatePart(string &name);
+    void removePart(string name);
+    void updatePart(string name);
 
 private:
     Ui::WarehouseWindow *ui;
@@ -48,7 +48,7 @@ private:
     bool nameSortAscending = true;
     bool priceSortAscending = true;
 
-    void displayParts(vector<AutoPart> &parts);
+    void displayParts(vector<AutoPart> parts);
     void addSampleParts();
 };
 
