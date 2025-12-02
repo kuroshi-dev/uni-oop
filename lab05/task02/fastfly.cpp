@@ -4,7 +4,7 @@ FastFly::FastFly(QWidget *parent) : Fly(parent, 2.5, 35){
     createPixmap();
 }
 
-void FastFly::update(QPointF &cursorPos, QPointF &windowPos){
+void FastFly::update(const QPointF &cursorPos, const QPointF &windowPos){
     QPointF direction = position - cursorPos;
     double dist = std::sqrt(direction.x() * direction.x() + direction.y() * direction.y());
 

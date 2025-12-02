@@ -24,13 +24,13 @@ public:
     Fly(QWidget *parent, double flySpeed = 3.0, int flySize = 40);
     virtual ~Fly();
 
-    virtual void update(QPointF &cursorPos, QPointF &windowPos = QPointF());
+    virtual void update(const QPointF &cursorPos, const QPointF &windowPos = QPointF());
     virtual void moveRandomly();
-    virtual void moveAwayFromCursor(QPointF &cursorPos);
+    virtual void moveAwayFromCursor(const QPointF &cursorPos);
     virtual void checkBounds(int windowWidth, int windowHeight);
 
-    QPointF getPosition() { return position; }
-    void setPosition(QPointF &pos);
+    QPointF getPosition() const { return position; }
+    void setPosition(const QPointF &pos);
     QLabel *getLabel() { return label; }
     int getSize() { return size; }
 

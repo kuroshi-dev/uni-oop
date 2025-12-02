@@ -38,7 +38,7 @@ void Fly::createPixmap(){
     label->raise();
 }
 
-void Fly::update(QPointF &cursorPos, QPointF &windowPos){
+void Fly::update(const QPointF &cursorPos, const QPointF &windowPos){
     QPointF direction = position - cursorPos;
     double distToCursor = std::sqrt(direction.x() * direction.x() + direction.y() * direction.y());
 
@@ -54,7 +54,7 @@ void Fly::update(QPointF &cursorPos, QPointF &windowPos){
     setPosition(position);
 }
 
-void Fly::moveAwayFromCursor(QPointF &cursorPos){
+void Fly::moveAwayFromCursor(const QPointF &cursorPos){
     QPointF direction = position - cursorPos;
     double dist = std::sqrt(direction.x() * direction.x() + direction.y() * direction.y());
 
@@ -78,7 +78,7 @@ void Fly::moveRandomly(){
     }
 }
 
-void Fly::setPosition(QPointF &pos){
+void Fly::setPosition(const QPointF &pos){
     position = pos;
     label->move(pos.x() - size / 2, pos.y() - size / 2);
     label->setVisible(true);

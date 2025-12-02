@@ -206,7 +206,7 @@ bool MainWindow::checkCollisionWithWindow(){
     return false;
 }
 
-double MainWindow::distance(QPointF &p1, QPointF &p2){
+double MainWindow::distance(const QPointF &p1, const QPointF &p2){
     double dx = p1.x() - p2.x();
     double dy = p1.y() - p2.y();
     return std::sqrt(dx * dx + dy * dy);

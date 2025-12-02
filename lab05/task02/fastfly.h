@@ -7,7 +7,7 @@ class FastFly : public Fly
 {
 public:
     FastFly(QWidget *parent);
-    void update(QPointF &cursorPos, QPointF &windowPos = QPointF()) override;
+    void update(const QPointF &cursorPos, const QPointF &windowPos = QPointF()) override;
 
 protected:
     QString getImagePath() override { return ":/images/fastfly.png"; }

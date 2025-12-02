@@ -4,7 +4,7 @@ SmartFly::SmartFly(QWidget *parent) : Fly(parent, 2.0, 45), seekingWindow(false)
     createPixmap();
 }
 
-void SmartFly::update(QPointF &cursorPos, QPointF &windowPos){
+void SmartFly::update(const QPointF &cursorPos, const QPointF &windowPos){
     if (!windowPos.isNull()){
         targetWindow = windowPos;
         seekingWindow = true;
