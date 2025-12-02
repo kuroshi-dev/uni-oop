@@ -1,6 +1,7 @@
 #ifndef WAREHOUSE_H
 #define WAREHOUSE_H
 
+#include "autopart.h"
 #include <map>
 #include <set>
 #include <stack>
@@ -9,8 +10,8 @@
 #include <algorithm>
 #include <string>
 #include <sstream>
+#include <ctime>
 #include <iomanip>
-#include "autopart.h"
 
 using namespace std;
 
@@ -22,7 +23,7 @@ private:
 
     set<string> uniqueNames;
 
-    queue<SupplyOrder> supplyQueue;
+    priority_queue<SupplyOrder, vector<SupplyOrder>, SupplyOrderComparator> supplyQueue;
 
     priority_queue<AutoPart, vector<AutoPart>, LowStockComparator> lowStockQueue;
 

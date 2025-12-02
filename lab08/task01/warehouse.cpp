@@ -1,5 +1,5 @@
 #include "warehouse.h"
-#include <ctime>
+
 
 string Warehouse::getCurrentTimestamp(){
     time_t now = time(0);
@@ -137,7 +137,7 @@ bool Warehouse::processNextSupply(){
         return false;
     }
 
-    SupplyOrder order = supplyQueue.front();
+    SupplyOrder order = supplyQueue.top();
     supplyQueue.pop();
 
     string key = order.part.getName() + "_" + order.part.getManufacturer();
@@ -161,10 +161,10 @@ int Warehouse::getSupplyQueueSize(){
 
 vector<SupplyOrder> Warehouse::getAllSupplyOrders(){
     vector<SupplyOrder> result;
-    queue<SupplyOrder> temp = supplyQueue;
+    priority_queue<SupplyOrder, vector<SupplyOrder>, SupplyOrderComparator> temp = supplyQueue;
 
     while (!temp.empty()){
-        result.push_back(temp.front());
+        result.push_back(temp.top());
         temp.pop();
     }
 

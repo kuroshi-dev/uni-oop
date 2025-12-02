@@ -61,4 +61,14 @@ struct LowStockComparator{
     }
 };
 
+struct SupplyOrderComparator{
+    bool operator()(const SupplyOrder& a, const SupplyOrder& b){
+
+        if (a.isUrgent != b.isUrgent){
+            return !a.isUrgent; // urgent has more priority
+        }
+        return false;
+    }
+};
+
 #endif // AUTOPART_H
